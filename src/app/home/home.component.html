@@ -1,0 +1,28 @@
+
+<nav>
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo">Hero Book</a>
+  </div>
+</nav>
+<form>
+    <div class="input-field">
+      <input type="text" placeholder="Search">
+    </div>
+</form>
+
+<table id="hero-list">
+    <thead>
+      <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Publisher</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hero of heroService.displayedHeroList">
+        <td class="hero-id">{{hero.ID}}</td>
+        <td class="hero-name">{{hero.Name}}</td>
+        <td class="hero-publisher">{{hero.Publisher}}</td>
+      </tr>
+    </tbody>
+  </table>
