@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import * as HEROS from './data/hero_info.json';
+import { Observable } from 'rxjs';
+import { Hero } from './hero';
+import { HttpClient } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
 
-  displayedHeroList = [];
+  constructor(private http: HttpClient) {
 
-  constructor() {
-    this.displayedHeroList = HEROS.default;
-   }
+  }
+  
+  getHeroes(): Observable<Hero[]>{
+    return this.http.get<Hero[]>('http://herobookapi.herokuapp.com/api/v1/heroes/');
+  } 
 
-   search(heroName: string) {
-    //this.displayedHeroList = HEROS.default;
-    this.displayedHeroList = this.displayedHeroList.filter(hero => hero.Name = heroName);
-    return this.displayedHeroList;
-   }
-
+  getHeroById(heroId){
+    return this.http.get<Hero>(`http://herobookapi.herokuapp.com/api/v1/heroes/${heroId}`);
+  }
 }

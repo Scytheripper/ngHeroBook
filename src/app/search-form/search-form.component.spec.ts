@@ -2,7 +2,18 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchFormComponent } from './search-form.component';
 import { FormsModule, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { of } from 'rxjs';
 
+class MockHeroSerice{
+  getHeroes() {
+    return of([
+      { 
+        id: 1,
+        name: 'Super Man'
+      }
+    ]);
+  }
+}
 describe('SearchFormComponent', () => {
   let component: SearchFormComponent;
   let fixture: ComponentFixture<SearchFormComponent>;
@@ -35,7 +46,7 @@ describe('SearchFormComponent', () => {
   
   it('should require query to submit form', () => {
     component.ngOnInit();
-    component.searchForm.controls.name.setValue('john');
+    component.searchForm.controls.query.setValue('john');
     expect(component.searchForm.valid).toBeTruthy();  
   });
   
@@ -44,18 +55,18 @@ describe('SearchFormComponent', () => {
       
       component = new SearchFormComponent(new FormBuilder());
       component.ngOnInit();
-      component.searchForm.controls.name.setValue('');   //MAKE IT INVALID wll refactor
+      component.searchForm.controls.query.setValue('');   //MAKE IT INVALID wll refactor
       expect(component.searchForm.valid).toBeFalsy();
   });
   
-  it('should return search results', () => {
-    component.searchResults = [1, 2, 3]
-    expect(component.getSearchResults()).toEqual([1, 2, 3]);  
-  });
   
   it('should show message if no results found', () => {
-    component.searchResults = [];
-    expect(component.getSearchResults()).toEqual('No results found...');  
+    component.heroService = new MockHeroSerice();
+    component.udpateHeroList = (param) => {
+
+    }
+    component.searchForm.controls.query.setValue('zzzzzzz');
+    expect(component.searchHeroes()).toEqual('No results found...');  
   });
 
 });

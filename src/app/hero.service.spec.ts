@@ -2,18 +2,63 @@ import { TestBed } from '@angular/core/testing';
 
 import { HeroService } from './hero.service';
 
+
+class MockHeroService{
+  getHeroes() {
+    return([
+      { 
+        id: 1,
+        name: 'Super Man'
+      }
+    ]);
+  }
+
+  getHero(id) {
+    if(id === 1){
+      return { 
+        id: 1,
+        name: 'Super Man'
+      };
+    }
+    else {
+      return {};
+    }
+  }
+
+  searchHeroes(query: string) {
+    return [
+      {
+        id: 1,
+        name: 'Super Man'
+      }
+    ]
+  }
+}
+
+let service: MockHeroService;
+
 describe('HeroService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = new MockHeroService();
+  });
 
   it('should be created', () => {
-    const service: HeroService = TestBed.get(HeroService);
     expect(service).toBeTruthy();
   });
 
-  it('display filter heroes based on given string', () => {
-    const service: HeroService = TestBed.get(HeroService);
-    let hero = {id: 1, name: 'Spider Man'};
-    service.displayedHeroList = [hero];
-    expect(service.search('Spider Man')).toEqual([{ID: 1, Name: 'Spider Man'}]);
+  it('should get list of heroes',()=>{
+    //excercise
+    let actual = service.getHeroes();
+    //assert
+    expect(actual).toEqual([{id: 1, name: 'Super Man'}]);
+  });
+
+  it('should return single hero with given ID',()=>{
+    expect(service.getHero(1)).toEqual({id: 1, name: 'Super Man'});
+  });
+
+  it('should return heroes with name including query', () => {
+      expect(service.searchHeroes('Super Man')).toEqual([{id: 1, name: 'Super Man'}]);
   });
 });

@@ -1,2 +1,5 @@
-<input type="text" placeholder="Search">
-  
+<form [formGroup]="searchForm" (ngSubmit)="searchHeroes()">    
+    <div class="input-field">
+        <input type="text" formControlName="query" placeholder="Search">
+    </div>
+</form>  

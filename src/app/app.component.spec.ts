@@ -2,16 +2,23 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchFormComponent } from './search-form/search-form.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule
       ],
       declarations: [
         AppComponent,
-        HomeComponent
+        HomeComponent,
+        SearchFormComponent
       ],
     }).compileComponents();
   }));
